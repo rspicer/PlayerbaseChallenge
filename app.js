@@ -27,7 +27,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', router);
 
 app.post('/login', (req, res) => {
-
+    const {
+        email,
+        password
+    } = req.body;
+    db.user.findAll({
+        where: {
+            email,
+            password
+        }
+    }).then((res) => {
+        res.json(res);
+    }).catch((err) => {
+        res.send(500);
+    })
 })
 
 app.post('/create', (req, res) => {
@@ -35,14 +48,16 @@ app.post('/create', (req, res) => {
         firstName,
         lastName,
         accountId,
-        email
+        email,
+        password
     } = req.body;
 
     db.user.create({
         firstName,
         lastName,
         accountId,
-        email
+        email,
+        password
     }).then((res) => {
         res.json(res)
     }).catch((err) => {
@@ -56,22 +71,34 @@ app.post('/user/:accountId/match/:matchId/favorite', (req, res) => {
     const matchId = req.params[0];
 
     db.favorite.create({
-        accountId,
+        userAccountId: accountId,
         matchId
+    }).then((res) => {
+        res.json(res);
+    }).catch((err) => {
+        //Should break this up into BadRequests, InternalErrors, etc.
+        res.send(500);
     })
 })
 
 app.get('/user/:accountId/favorites', (req, res) => {
+    const accountId = req.params[0];
 
+    db.favorite.findAll({
+        attributes: ['matchId', ['userAccountId', 'accountId']],
+        where: {
+            accountId
+        }
+    })
 })
 
-app.post('/user/:accountId/match/:matchId/rate', (req, res) => {
+// app.post('/user/:accountId/match/:matchId/rate', (req, res) => {
 
-})
+// })
 
-app.get('/user/ratings', (req, res) => {
+// app.get('/user/ratings', (req, res) => {
 
-})
+// })
 
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
