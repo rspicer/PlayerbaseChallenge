@@ -8,7 +8,7 @@ build-backend:
 build-frontend:
 	cd ./playerbase-dota-frontend && npm install
 
-filename = 'playerbase_'`date +'%s'`'.zip'
+FILENAME = 'playerbase_'`date +'%s'`'.zip'
 
 deploy: build-frontend
 	rm -rf ./public/*
