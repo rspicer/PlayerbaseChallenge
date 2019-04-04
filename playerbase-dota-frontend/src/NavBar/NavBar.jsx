@@ -1,9 +1,9 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Search from './Search';
 
@@ -14,7 +14,8 @@ function NavBar(props) {
             <AppBar position="static">
                 <Toolbar className={classes.toolbar}>
                     <Search />
-                    <Button color="inherit" className={classes.button}>Login</Button>
+                    <Button component={Link} to="/create" color="inherit" className={classes.leftButton}>Create User</Button>
+                    <Button component={Link} to="/login" color="inherit" className={classes.button}>Login</Button>
                 </Toolbar>
             </AppBar>
         </div>
@@ -32,7 +33,7 @@ const styles = {
     grow: {
         flexGrow: 1
     },
-    button: {
+    leftButton: {
         marginLeft: 'auto'
     },
     menuButton: {

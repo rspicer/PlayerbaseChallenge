@@ -10,18 +10,18 @@ class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchTerms: ''
+            accountId: ''
         }
     }
 
     handleSearchChange = event => {
         this.setState({
-            searchTerms: event.target.value
+            accountId: event.target.value
         })
     }
 
     handleSearchSubmit = values => {
-        console.log(this.state.searchTerms);
+        console.log(this.state.accountId);
     }
 
     render() {
@@ -33,7 +33,7 @@ class Search extends Component {
                         <SearchIcon />
                     </div>
                     <InputBase
-                        placeholder="Search…"
+                        placeholder="Search by Account ID…"
                         classes={{
                             root: classes.inputRoot,
                             input: classes.inputInput,
