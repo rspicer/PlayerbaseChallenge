@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import history from './history';
+import history from '../history.js';
 
 
 class Search extends Component {
@@ -22,6 +22,7 @@ class Search extends Component {
     }
 
     handleSearchSubmit = event => {
+        event.preventDefault();
         history.push('/matches?accountId=' + this.state.accountId)
     }
 

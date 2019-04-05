@@ -14,6 +14,10 @@ function NavBar(props) {
             <AppBar position="static">
                 <Toolbar className={classes.toolbar}>
                     <Search />
+                    {props.accountId ? (
+                        <Button component={Link} to={"/matches?accountId=" + props.accountId} color="inherit" className={classes.button}>See Matches</Button>
+                    ) : null}
+
                     <Button component={Link} to="/create" color="inherit" className={classes.leftButton}>Create User</Button>
                     <Button component={Link} to="/login" color="inherit" className={classes.button}>Login</Button>
                 </Toolbar>

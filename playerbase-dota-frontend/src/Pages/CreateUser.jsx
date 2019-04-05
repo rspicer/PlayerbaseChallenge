@@ -19,6 +19,7 @@ class CreateUser extends Component {
     }
 
     handleSubmit = event => {
+        event.preventDefault();
         const { firstName, lastName, email, accountId, password } = this.state;
         axios.post('http://localhost:8000/create', {
             firstName,

@@ -22,11 +22,12 @@ Landing.propTypes = {
 
 const styles = {
     title: {
-        marginTop: 20
+        marginTop: 20,
+        marginBottom: 10
     },
     logo: {
-        width: '50%',
-        height: '50%'
+        width: '25%',
+        height: '25%'
     }
 };
 

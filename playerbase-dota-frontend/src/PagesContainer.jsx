@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 import NavBar from './NavBar/NavBar';
 import CreateUser from './Pages/CreateUser';
 import Favorites from './Pages/Favorites';
 import Landing from './Pages/Landing';
 import Login from './Pages/Login';
 import UserMatches from './Pages/UserMatches';
-import history from './history';
+import history from './history.js';
 
 class PagesContainer extends Component {
     state = {
@@ -28,7 +28,7 @@ class PagesContainer extends Component {
     render() {
         return (
             <Router history={history}>
-                <NavBar />
+                <NavBar accountId={this.state.accountId} />
                 <Route path="/" exact component={Landing} />
                 <Route path="/create" render={(props) => <CreateUser {...props} onLogin={this.handleLogin} />} />
                 <Route path="/favorites" render={(props) => <Favorites {...props} accountId={this.state.accountId} />} />
