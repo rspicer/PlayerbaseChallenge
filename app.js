@@ -2,13 +2,14 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 const router = express.Router();
 
 const db = require('./models');
 
-db.sequelize.sync().then(() => {
+db.sequelize.sync({}).then(() => {
     console.log("DB Created/synced");
 }).catch((err) => {
     console.error(err);
@@ -17,6 +18,7 @@ db.sequelize.sync().then(() => {
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({
     extended: false
 }));
@@ -36,10 +38,10 @@ app.post('/login', (req, res) => {
             email,
             password
         }
-    }).then((res) => {
-        res.json(res);
+    }).then((results) => {
+        res.json(results);
     }).catch((err) => {
-        res.send(500);
+        res.sendStatus(500);
     })
 })
 
@@ -55,14 +57,15 @@ app.post('/create', (req, res) => {
     db.user.create({
         firstName,
         lastName,
-        accountId,
+        accountId: parseInt(accountId, 10),
         email,
         password
-    }).then((res) => {
-        res.json(res)
+    }).then((results) => {
+        res.json(results)
     }).catch((err) => {
+        console.error(err)
         //Should break this up into BadRequests, InternalErrors, etc.
-        res.send(500);
+        res.sendStatus(500);
     })
 })
 
@@ -73,11 +76,12 @@ app.post('/user/:accountId/match/:matchId/favorite', (req, res) => {
     db.favorite.create({
         userAccountId: accountId,
         matchId
-    }).then((res) => {
-        res.json(res);
+    }).then((results) => {
+        res.json(results);
     }).catch((err) => {
+        console.error(err)
         //Should break this up into BadRequests, InternalErrors, etc.
-        res.send(500);
+        res.sendStatus(500);
     })
 })
 
@@ -89,6 +93,10 @@ app.get('/user/:accountId/favorites', (req, res) => {
         where: {
             accountId
         }
+    }).then((results) => {
+        res.json(results);
+    }).catch((err) => {
+        console.error(err);
     })
 })
 
@@ -101,7 +109,7 @@ app.get('/user/:accountId/favorites', (req, res) => {
 // })
 
 app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendStatusFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 

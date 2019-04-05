@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 
 const axios = require('axios');
 
-
 class CreateUser extends Component {
     state = {
         firstName: '',
@@ -21,14 +20,14 @@ class CreateUser extends Component {
 
     handleSubmit = event => {
         const { firstName, lastName, email, accountId, password } = this.state;
-        axios.post('localhost:8000/create', {
+        axios.post('http://localhost:8000/create', {
             firstName,
             lastName,
             email,
             accountId,
             password
         }).then(() => {
-            //Add state login
+            this.props.onLogin(email, password, accountId)
             console.log('User Created!')
         }).catch((err) => {
             console.error(err)
@@ -66,6 +65,7 @@ class CreateUser extends Component {
                 <TextField
                     id="password"
                     label="Password"
+                    type="password"
                     className={classes.textField}
                     value={this.state.password}
                     onChange={this.handleChange('password')}
@@ -102,8 +102,8 @@ const styles = {
         marginRight: 20,
     },
     textField: {
-        marginLeft: 5,
-        marginRight: 5
+        marginLeft: 10,
+        marginRight: 10
     },
     formContainer: {
         display: 'flex',

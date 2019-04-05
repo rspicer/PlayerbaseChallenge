@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import history from './history';
 
 
 class Search extends Component {
@@ -20,8 +21,8 @@ class Search extends Component {
         })
     }
 
-    handleSearchSubmit = values => {
-        console.log(this.state.accountId);
+    handleSearchSubmit = event => {
+        history.push('/matches?accountId=' + this.state.accountId)
     }
 
     render() {
@@ -33,7 +34,7 @@ class Search extends Component {
                         <SearchIcon />
                     </div>
                     <InputBase
-                        placeholder="Search by Account ID…"
+                        placeholder="Search by Steam32 ID…"
                         classes={{
                             root: classes.inputRoot,
                             input: classes.inputInput,
